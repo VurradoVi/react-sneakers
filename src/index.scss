@@ -2,6 +2,7 @@
   box-sizing: border-box;
   outline: none;
   font-family: "Inter", system-ui;
+  line-height: 20px;
 }
 
 a {
@@ -20,7 +21,8 @@ ul {
 
 body {
   margin: 0;
-  font-family: "Inter", system-ui;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: #e7f6ff;
 }
 
@@ -80,12 +82,17 @@ header {
   }
 }
 
+.sneakersFlex{
+  display: flex;
+}
+
 .card {
   border: 1px solid #d8d8d8;
   padding: 30px;
   width: 220px;
   border-radius: 40px;
   transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  margin-right: 30px;
   cursor: pointer;
   &:hover {
     box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.08);
