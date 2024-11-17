@@ -1,6 +1,5 @@
-import React from 'react'
 
-export default function Header() {
+export default function Header({onClickCart} : {onClickCart: () => void}) {
   return (
     <header>
         <div className="headerLeft">
@@ -11,7 +10,7 @@ export default function Header() {
           </div>
         </div>
         <ul className="headerRight">
-          <li>
+          <li onClick={onClickCart}>
             <img width={18} height={18} src="/img/trash.svg" />
             <span>1205 руб.</span>
           </li>

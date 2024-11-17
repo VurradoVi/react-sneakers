@@ -1,37 +1,39 @@
+import { useState } from "react";
 import Card from "./components/Card/Card";
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
 
 interface IArr {
-  name: string,
-  price: number
-  img: string
+  name: string;
+  price: number;
+  img: string;
 }
 
 const arr: IArr[] = [
   {
-    name: 'Мужские Кроссовки Nike Blazer Mid Suede',
+    name: "Мужские Кроссовки Nike Blazer Mid Suede",
     price: 12999,
-    img: '/img/sneakers/s1.jpg'
+    img: "/img/sneakers/s1.jpg",
   },
   {
-    name: 'Мужские Кроссовки Nike Air Max 270',
+    name: "Мужские Кроссовки Nike Air Max 270",
     price: 12999,
-    img: '/img/sneakers/s2.jpg'
+    img: "/img/sneakers/s2.jpg",
   },
   {
-    name: 'Мужские Кроссовки Nike Blazer Mid Suede',
+    name: "Мужские Кроссовки Nike Blazer Mid Suede",
     price: 8499,
-    img: '/img/sneakers/s3.jpg'
-  }
-]
+    img: "/img/sneakers/s3.jpg",
+  },
+];
 
 function App() {
+  const [cartOpened, setCartOpened] = useState(false)
   return (
     <div className="wrapper">
-      <Drawer />
+      {cartOpened && <Drawer onClose={() => setCartOpened(false)} />}
 
-      <Header />
+      <Header onClickCart={() => setCartOpened(true)} />
 
       <div className="content">
         <div className="content-search">
@@ -43,7 +45,16 @@ function App() {
         </div>
 
         <div className="sneakersFlex">
-          {arr.map((s, i) => <Card key={i} name={s.name} price={s.price} img={s.img} />)}
+          {arr.map((s, i) => (
+            <Card
+              key={i}
+              name={s.name}
+              price={s.price}
+              img={s.img}
+              onClickFavorite={() => console.log('Нажали на фаворите')}
+              onClickPlus={() => console.log("Нажали на плюс")}
+            />
+          ))}
         </div>
       </div>
     </div>

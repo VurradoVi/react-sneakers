@@ -1,12 +1,15 @@
-import React from "react";
-
-export default function Drawer() {
+export default function Drawer({ onClose }: { onClose: () => void }) {
   return (
-    <div style={{ display: "none" }} className="overlay">
-      <div className="drawer">
+    <div className="overlay" onClick={onClose}>
+      <div className="drawer" onClick={(e) => e.stopPropagation()}>
         <h2>
           Корзина
-          <img className="removeBtn" src="/img/delete.svg" alt="delete" />
+          <img
+            onClick={onClose}
+            className="removeBtn"
+            src="/img/delete.svg"
+            alt="delete"
+          />
         </h2>
 
         <div className="items">
