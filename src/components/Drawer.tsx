@@ -1,4 +1,12 @@
-export default function Drawer({ onClose }: { onClose: () => void }) {
+import { IArr } from "../App";
+
+type TDrawer = {
+  onClose: () => void,
+  items: IArr[],
+  onRemove: (id:number) => void
+}
+
+export default function Drawer({ onClose, items, onRemove }: TDrawer) {
   return (
     <div className="overlay" onClick={onClose}>
       <div className="drawer" onClick={(e) => e.stopPropagation()}>
@@ -13,17 +21,19 @@ export default function Drawer({ onClose }: { onClose: () => void }) {
         </h2>
 
         <div className="items">
-          <div className="cartItem">
-            <div
-              style={{ backgroundImage: "url(/img/sneakers/s1.jpg)" }}
-              className="cartItemImg"
-            ></div>
-            <div>
-              <p>Мужские Кроссовки Nike Blazer Mid Suede</p>
-              <b>12 999 руб.</b>
+          {items.map((obj) => (
+            <div key={obj.id} className="cartItem">
+              <div
+                style={{ backgroundImage: `url(${obj.img})` }}
+                className="cartItemImg"
+              ></div>
+              <div>
+                <p>{obj.name}</p>
+                <b>{obj.price} руб.</b>
+              </div>
+              <img onClick={() => onRemove(obj.id)} className="removeBtn" src="/img/delete.svg" alt="delete" />
             </div>
-            <img className="removeBtn" src="/img/delete.svg" alt="delete" />
-          </div>
+          ))}
         </div>
 
         <div className="sideFooter">
