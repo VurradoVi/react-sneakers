@@ -1,10 +1,10 @@
 import { IArr } from "../App";
 
 type TDrawer = {
-  onClose: () => void,
-  items: IArr[],
-  onRemove: (id:number) => void
-}
+  onClose: () => void;
+  items: IArr[];
+  onRemove: (id: number) => void;
+};
 
 export default function Drawer({ onClose, items, onRemove }: TDrawer) {
   return (
@@ -21,19 +21,30 @@ export default function Drawer({ onClose, items, onRemove }: TDrawer) {
         </h2>
 
         <div className="items">
-          {items.map((obj) => (
-            <div key={obj.id} className="cartItem">
-              <div
-                style={{ backgroundImage: `url(${obj.img})` }}
-                className="cartItemImg"
-              ></div>
-              <div>
-                <p>{obj.name}</p>
-                <b>{obj.price} руб.</b>
+          {items.length > 0 ? (
+            items.map((obj) => (
+              <div key={obj.id} className="cartItem">
+                <div
+                  style={{ backgroundImage: `url(${obj.img})` }}
+                  className="cartItemImg"
+                ></div>
+                <div>
+                  <p>{obj.name}</p>
+                  <b>{obj.price} руб.</b>
+                </div>
+                <img
+                  onClick={() => onRemove(obj.id)}
+                  className="removeBtn"
+                  src="/img/delete.svg"
+                  alt="delete"
+                />
               </div>
-              <img onClick={() => onRemove(obj.id)} className="removeBtn" src="/img/delete.svg" alt="delete" />
-            </div>
-          ))}
+            ))
+          ) : (
+            <h3 style={{ textAlign: "center", marginTop: "50px" }}>
+              Корзина пуста
+            </h3>
+          )}
         </div>
 
         <div className="sideFooter">

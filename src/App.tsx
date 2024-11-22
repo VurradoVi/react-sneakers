@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Card from "./components/Card/Card";
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
@@ -11,67 +12,43 @@ export interface IArr {
 }
 
 function App() {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "Мужские Кроссовки Nike Blazer Mid Suede",
-      price: 12999,
-      img: "/img/sneakers/s1.jpg",
-    },
-    {
-      id: 2,
-      name: "Мужские Кроссовки Nike Air Max 270",
-      price: 12999,
-      img: "/img/sneakers/s2.jpg",
-    },
-    {
-      id: 3,
-      name: "Мужские Кроссовки Nike Blazer Mid Suede",
-      price: 8499,
-      img: "/img/sneakers/s3.jpg",
-    },
-    {
-      id: 4,
-      name: "Кроссовки Puma X Aka Boku Future Rider",
-      price: 8999,
-      img: "/img/sneakers/s4.jpg",
-    },
-    {
-      id: 5,
-      name: "Мужские Кроссовки Under Armour Curry 8",
-      price: 15199,
-      img: "/img/sneakers/s5.jpg",
-    },
-    {
-      id: 6,
-      name: "Мужские Кроссовки Nike Kyrie 7",
-      price: 13199,
-      img: "/img/sneakers/s6.jpg",
-    },
-    {
-      id: 7,
-      name: "Мужские Кроссовки Jordan Air Jordan 11",
-      price: 10799,
-      img: "/img/sneakers/s7.jpg",
-    },
-  ]);
+  const [items, setItems] = useState<IArr[]>([]);
   const [cartItems, setCartItems] = useState<IArr[]>([]);
   const [cartOpened, setCartOpened] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("https://6739f262a3a36b5a62f02ffd.mockapi.io/items")
+      .then((res) => {
+        setItems(res.data);
+      });
+    axios
+      .get("https://6739f262a3a36b5a62f02ffd.mockapi.io/cart")
+      .then((res) => {
+        setCartItems(res.data);
+      });
+  }, []);
 
   const onAddToCart = (obj: IArr) => {
-    setCartItems([...cartItems, obj]);
+    axios.post("https://6739f262a3a36b5a62f02ffd.mockapi.io/cart", obj);
+    setCartItems((prev) => [...prev, obj]);
   };
 
-  const onRemoveCart = (id: number) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-    
+  const onRemoveItem = (id:number) => {
+    axios.delete(`https://6739f262a3a36b5a62f02ffd.mockapi.io/cart/${id}`);
+    setCartItems((prev) => prev.filter(item => item.id !== id));
+  };
+
+  const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
   };
 
   return (
     <div className="wrapper">
       {cartOpened && (
         <Drawer
-          onRemove={onRemoveCart}
+          onRemove={onRemoveItem}
           items={cartItems}
           onClose={() => setCartOpened(false)}
         />
@@ -81,25 +58,38 @@ function App() {
 
       <div className="content">
         <div className="content-search">
-          <h1>Все кроссовки</h1>
+          <h1>
+            {searchValue
+              ? `Поиск по запросу: "${searchValue}"`
+              : "Все кроссовки"}
+          </h1>
           <div className="search-block">
             <img src="/img/search.svg" alt="Search" />
-            <input placeholder="Поиск..." type="text" />
+            <input
+              value={searchValue}
+              onChange={onChangeSearchInput}
+              placeholder="Поиск..."
+              type="text"
+            />
           </div>
         </div>
 
         <div className="sneakersFlex">
-          {items.map((s) => (
-            <Card
-              id={s.id}
-              key={s.id}
-              name={s.name}
-              price={s.price}
-              img={s.img}
-              onClickFavorite={() => console.log("Нажали на фаворите")}
-              onPlus={(obj) => onAddToCart(obj)}
-            />
-          ))}
+          {items
+            .filter((item) =>
+              item.name.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((s) => (
+              <Card
+                id={s.id}
+                key={s.id}
+                name={s.name}
+                price={s.price}
+                img={s.img}
+                onClickFavorite={() => console.log("Нажали на фаворите")}
+                onPlus={(obj) => onAddToCart(obj)}
+              />
+            ))}
         </div>
       </div>
     </div>
