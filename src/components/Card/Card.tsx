@@ -13,18 +13,24 @@ export default function Card({
   img,
   price,
   onClickFavorite,
-  onPlus
+  onPlus,
 }: CardProps) {
   const [isAdded, setIsAdded] = useState<boolean>(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
   const onClickPlus = () => {
     onPlus({ id, name, img, price });
     setIsAdded(!isAdded);
   };
+
+
+  const onFavorite = () => {
+    setIsFavorite(!isFavorite)
+  }
   return (
     <div className={styles.card}>
       <div className={styles.favorite} onClick={onClickFavorite}>
-        <img src="/img/favorite.svg" alt="favorite" />
+        <img onClick={onFavorite} src={isFavorite ? "/img/favorite2.svg" : "/img/favorite.svg"} alt="favorite" />
       </div>
       <img width={133} height={112} src={img} alt="sneakers" />
       <h5>{name}</h5>

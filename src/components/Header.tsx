@@ -1,23 +1,29 @@
+import { Link } from "react-router";
 
-export default function Header({onClickCart} : {onClickCart: () => void}) {
+export default function Header({ onClickCart }: { onClickCart: () => void }) {
   return (
     <header>
-        <div className="headerLeft">
-          <img width={40} height={40} src="/img/logo.png" />
-          <div className="headerInfo">
-            <h3>React Sneakers</h3>
-            <p>Магазин лучших кроссовок</p>
-          </div>
+      <div className="headerLeft">
+        <img width={40} height={40} src="/img/logo.png" />
+        <div className="headerInfo">
+          <h3>React Sneakers</h3>
+          <p>Магазин лучших кроссовок</p>
         </div>
-        <ul className="headerRight">
-          <li onClick={onClickCart}>
-            <img width={18} height={18} src="/img/trash.svg" />
-            <span>1205 руб.</span>
-          </li>
-          <li>
-            <img width={18} height={18} src="/img/User.svg" />
-          </li>
-        </ul>
-      </header>
-  )
+      </div>
+      <ul className="headerRight">
+        <li onClick={onClickCart}>
+          <img width={18} height={18} src="/img/trash.svg" alt="корзина" />
+          <span>1205 руб.</span>
+        </li>
+        <li>
+          <Link to="/favorite">
+            <img width={18} height={18} src="/img/favor.svg" alt="закладки" />
+          </Link>
+        </li>
+        <li>
+          <img width={18} height={18} src="/img/User.svg" alt="пользователь" />
+        </li>
+      </ul>
+    </header>
+  );
 }
