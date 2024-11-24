@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./Card.module.scss";
-import { IArr } from "../../App";
+import { IArr } from "../pages/Home";
+
 
 interface CardProps extends IArr {
   onClickFavorite: () => void;

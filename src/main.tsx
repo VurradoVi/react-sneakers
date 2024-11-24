@@ -1,20 +1,17 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router";
-import App from "./App.tsx";
 import Favorite from "./components/pages/Favorite.tsx";
+import { BrowserRouter, Route, Routes } from "react-router";
 import "./index.scss";
+import Home from "./components/pages/Home.tsx";
 
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route
-          path="favorite"
-          element={<Favorite onClickCart={() => console.log("Cart opened")} />}
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/favorite" element={<Favorite />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

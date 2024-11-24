@@ -3,6 +3,7 @@ import { Link } from "react-router";
 export default function Header({ onClickCart }: { onClickCart: () => void }) {
   return (
     <header>
+      <Link to="/">
       <div className="headerLeft">
         <img width={40} height={40} src="/img/logo.png" />
         <div className="headerInfo">
@@ -10,6 +11,7 @@ export default function Header({ onClickCart }: { onClickCart: () => void }) {
           <p>Магазин лучших кроссовок</p>
         </div>
       </div>
+      </Link>
       <ul className="headerRight">
         <li onClick={onClickCart}>
           <img width={18} height={18} src="/img/trash.svg" alt="корзина" />
