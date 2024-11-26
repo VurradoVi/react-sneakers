@@ -1,11 +1,12 @@
 import { useState } from "react";
 import styles from "./Card.module.scss";
-import { IArr } from "../pages/Home";
+import { IArr } from "../../App";
 
 
 interface CardProps extends IArr {
   onClickFavorite: () => void;
   onPlus: (item: IArr) => void;
+  favorite: boolean
 }
 
 export default function Card({
@@ -15,9 +16,10 @@ export default function Card({
   price,
   onClickFavorite,
   onPlus,
+  favorite,
 }: CardProps) {
   const [isAdded, setIsAdded] = useState<boolean>(false);
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(favorite);
 
   const onClickPlus = () => {
     onPlus({ id, name, img, price });
