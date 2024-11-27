@@ -22,11 +22,7 @@ export default function Favorites({
       {favorites.length > 0 ? (
           favorites.map((s) => (
             <Card
-              id={s.id}
-              key={s.id}
-              name={s.name}
-              price={s.price}
-              img={s.img}
+              {...s}
               favorite={true}
               onClickFavorite={() => onToggleFavorite(s)}
             onPlus={(obj) => onAddToCart(obj)}
