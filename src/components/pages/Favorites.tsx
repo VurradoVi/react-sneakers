@@ -1,17 +1,18 @@
+import { useContext } from "react";
 import { IArr } from "../../App";
 import Card from "../Card/Card";
+import AppContext from "../../context";
 
 interface FavoritesProps {
-  favorites: IArr[];
   onToggleFavorite: (obj: IArr) => void;
   onAddToCart: (obj: IArr) => void;
 }
 
 export default function Favorites({
-  favorites,
   onToggleFavorite,
   onAddToCart,
 }: FavoritesProps) {
+  const {favorites} = useContext(AppContext)
   return (
     <div className="content">
       <div className="content-search">

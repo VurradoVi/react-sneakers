@@ -7,8 +7,8 @@ interface CardProps extends IArr {
   onClickFavorite: () => void;
   onPlus: (item: IArr) => void;
   favorite: boolean;
-  added: boolean;
-  loading: boolean;
+  added?: boolean;
+  loading?: boolean;
 }
 
 export default function Card({
