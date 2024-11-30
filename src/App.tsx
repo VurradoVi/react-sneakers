@@ -7,7 +7,6 @@ import Home from "./components/pages/Home";
 import Favorites from "./components/pages/Favorites";
 import AppContext from "./context";
 
-
 export interface IArr {
   id: number;
   name: string;
@@ -58,9 +57,7 @@ export default function App() {
         axios.delete(
           `https://6739f262a3a36b5a62f02ffd.mockapi.io/cart/${obj.id}`
         );
-        setCartItems((prev) =>
-          prev.filter((item) => Number(item.id) !== Number(obj.id))
-        );
+        setCartItems((prev) => prev.filter((item) => item.id !== obj.id));
       } else {
         axios.post("https://6739f262a3a36b5a62f02ffd.mockapi.io/cart", obj);
         setCartItems((prev) => [...prev, obj]);
@@ -99,10 +96,19 @@ export default function App() {
 
   const isAddedItems = (id: number) => {
     return cartItems.some((obj) => Number(obj.id) === Number(id));
-  }
+  };
 
   return (
-    <AppContext.Provider value={{ items, cartItems, favorites, isAddedItems, setCartOpened, setCartItems }}>
+    <AppContext.Provider
+      value={{
+        items,
+        cartItems,
+        favorites,
+        isAddedItems,
+        setCartOpened,
+        setCartItems,
+      }}
+    >
       <div className="wrapper">
         {cartOpened && (
           <Drawer

@@ -1,0 +1,27 @@
+{
+  "orders": [
+    {
+      "id": "7d7d",
+      "items": [
+        {
+          "id": "1",
+          "name": "Мужские Кроссовки Nike Blazer Mid Suede",
+          "img": "/img/sneakers/s1.jpg",
+          "price": 12999
+        },
+        {
+          "id": "2",
+          "name": "Мужские Кроссовки Nike Air Max 270",
+          "img": "/img/sneakers/s2.jpg",
+          "price": 12999
+        },
+        {
+          "id": "3",
+          "name": "Мужские Кроссовки Nike Blazer Mid Suede",
+          "img": "/img/sneakers/s3.jpg",
+          "price": 9999
+        }
+      ]
+    }
+  ]
+}
