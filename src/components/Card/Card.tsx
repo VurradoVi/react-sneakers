@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./Card.module.scss";
 import { IArr } from "../../App";
 import ContentLoader from "react-content-loader";
+import AppContext from "../../context";
 
 interface CardProps extends IArr {
   onClickFavorite: () => void;
   onPlus: (item: IArr) => void;
   favorite: boolean;
-  added?: boolean;
   loading?: boolean;
 }
 
@@ -19,15 +19,13 @@ export default function Card({
   onClickFavorite,
   onPlus,
   favorite = false,
-  added = false,
   loading = false,
 }: CardProps) {
-  const [isAdded, setIsAdded] = useState<boolean>(added);
+  const {isAddedItems} = useContext(AppContext)
   const [isFavorite, setIsFavorite] = useState<boolean>(favorite);
 
   const onClickPlus = () => {
     onPlus({ id, name, img, price });
-    setIsAdded(!isAdded);
   };
 
   const onFavorite = () => {
@@ -68,7 +66,7 @@ export default function Card({
             </div>
             <img
               onClick={onClickPlus}
-              src={isAdded ? "/img/PlusSub.svg" : "/img/Plus.svg"}
+              src={isAddedItems(id) ? "/img/PlusSub.svg" : "/img/Plus.svg"}
               alt="btn"
             />
           </div>

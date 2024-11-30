@@ -2,12 +2,21 @@ import { createContext } from "react";
 import { IArr } from "./App";
 
 interface AppContextType {
-    favorites: IArr[];
-
-  }
+  favorites: IArr[];
+  items: IArr[]; 
+  cartItems: IArr[]; 
+  isAddedItems: (id: number) => boolean;
+  setCartOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  setCartItems: React.Dispatch<React.SetStateAction<IArr[]>>;
+}
 
 const defaultValue: AppContextType = {
-  favorites: [], // Значение по умолчанию
+  favorites: [],
+  items: [], 
+  cartItems: [], 
+  isAddedItems: () => false,
+  setCartOpened: () => false,
+  setCartItems: () => false
 };
 
 const AppContext = createContext<AppContextType>(defaultValue);

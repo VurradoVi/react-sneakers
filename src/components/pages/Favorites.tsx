@@ -12,7 +12,7 @@ export default function Favorites({
   onToggleFavorite,
   onAddToCart,
 }: FavoritesProps) {
-  const {favorites} = useContext(AppContext)
+  const { favorites } = useContext(AppContext);
   return (
     <div className="content">
       <div className="content-search">
@@ -20,17 +20,18 @@ export default function Favorites({
       </div>
 
       <div className="sneakersFlex">
-      {favorites.length > 0 ? (
+        {favorites.length > 0 ? (
           favorites.map((s) => (
             <Card
+              key={s.id}
               {...s}
               favorite={true}
               onClickFavorite={() => onToggleFavorite(s)}
-            onPlus={(obj) => onAddToCart(obj)}
+              onPlus={(obj) => onAddToCart(obj)}
             />
           ))
         ) : (
-          <p style={{fontWeight: 'bold'}}>Пусто</p>
+          <p style={{ fontWeight: "bold" }}>Пусто</p>
         )}
       </div>
     </div>

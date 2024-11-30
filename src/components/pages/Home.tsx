@@ -17,9 +17,9 @@ export default function Home({
   onToggleFavorite,
   onChangeSearchInput,
   onAddToCart,
-  cartItems,
   isLoading,
 }: HomeProps) {
+
   const renderItems = () => {
     const filteredItems = items.filter((item) =>
       item.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -31,7 +31,6 @@ export default function Home({
         favorite={false}
         onClickFavorite={() => onToggleFavorite(s)}
         onPlus={(obj) => onAddToCart(obj)}
-        added={cartItems.some((obj) => Number(obj.id) === Number(s.id))}
         loading={isLoading}
       />
     ));

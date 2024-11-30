@@ -7,6 +7,7 @@ import Home from "./components/pages/Home";
 import Favorites from "./components/pages/Favorites";
 import AppContext from "./context";
 
+
 export interface IArr {
   id: number;
   name: string;
@@ -95,8 +96,13 @@ export default function App() {
   const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+
+  const isAddedItems = (id: number) => {
+    return cartItems.some((obj) => Number(obj.id) === Number(id));
+  }
+
   return (
-    <AppContext.Provider value={{ items, cartItems, favorites }}>
+    <AppContext.Provider value={{ items, cartItems, favorites, isAddedItems, setCartOpened, setCartItems }}>
       <div className="wrapper">
         {cartOpened && (
           <Drawer
