@@ -1,8 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { IArr } from "../App";
 import Info from "./Info";
-import AppContext from "../context";
+import { useCart } from "../hooks/useCart";
 import axios from "axios";
+
 
 type TDrawer = {
   onClose: () => void;
@@ -13,10 +14,10 @@ type TDrawer = {
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function Drawer({ onClose, items, onRemove }: TDrawer) {
+  const {cartItems, setCartItems, totalPrice} = useCart()
   const [isComplete, setIsComplete] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { cartItems, setCartItems } = useContext(AppContext);
 
   const onClickOrder = async () => {
     try {
@@ -34,7 +35,8 @@ export default function Drawer({ onClose, items, onRemove }: TDrawer) {
         await delay(1000);
       }
     } catch (error) {
-      alert("ошибка с оформлением товара");
+      alert("ошибка с оформлением товара db.json");
+      console.log('json-server --watch db.json')
     }
     setIsLoading(false);
   };
@@ -79,12 +81,12 @@ export default function Drawer({ onClose, items, onRemove }: TDrawer) {
                 <li>
                   <span>Итого:</span>
                   <div></div>
-                  <b>21 498 руб.</b>
+                  <b>{totalPrice} руб.</b>
                 </li>
                 <li>
                   <span>Налог 5%:</span>
                   <div></div>
-                  <b>1074 руб.</b>
+                  <b>{((totalPrice / 100) * 5).toFixed(2)} руб.</b>
                 </li>
               </ul>
               <button

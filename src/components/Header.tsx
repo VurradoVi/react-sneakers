@@ -1,21 +1,25 @@
+
 import { Link } from "react-router";
+import { useCart } from "../hooks/useCart";
+
 
 export default function Header({ onClickCart }: { onClickCart: () => void }) {
+  const {totalPrice} = useCart()
   return (
     <header>
       <Link to="/">
-      <div className="headerLeft">
-        <img width={40} height={40} src="/img/logo.png" />
-        <div className="headerInfo">
-          <h3>React Sneakers</h3>
-          <p>Магазин лучших кроссовок</p>
+        <div className="headerLeft">
+          <img width={40} height={40} src="/img/logo.png" />
+          <div className="headerInfo">
+            <h3>React Sneakers</h3>
+            <p>Магазин лучших кроссовок</p>
+          </div>
         </div>
-      </div>
       </Link>
       <ul className="headerRight">
         <li onClick={onClickCart}>
           <img width={18} height={18} src="/img/trash.svg" alt="корзина" />
-          <span>1205 руб.</span>
+          <span>{totalPrice} руб.</span>
         </li>
         <li>
           <Link to="/favorite">
