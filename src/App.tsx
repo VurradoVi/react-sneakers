@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router";
 import Home from "./components/pages/Home";
 import Favorites from "./components/pages/Favorites";
 import AppContext from "./context";
+import Orders from "./components/pages/Orders";
 
 export interface IArr {
   id: number;
@@ -106,6 +107,7 @@ export default function App() {
         favorites,
         isAddedItems,
         setCartOpened,
+
         setCartItems,
       }}
     >
@@ -143,7 +145,16 @@ export default function App() {
                 onAddToCart={onAddToCart}
               />
             }
-          ></Route>
+          />
+
+          <Route
+            path="/orders"
+            element={
+              <Orders onToggleFavorite={onToggleFavorite}
+              onAddToCart={onAddToCart}
+              />
+            }
+          />
         </Routes>
       </div>
     </AppContext.Provider>

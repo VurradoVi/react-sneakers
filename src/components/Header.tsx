@@ -27,7 +27,9 @@ export default function Header({ onClickCart }: { onClickCart: () => void }) {
           </Link>
         </li>
         <li>
-          <img width={18} height={18} src="/img/User.svg" alt="пользователь" />
+          <Link to="/orders">
+            <img width={18} height={18} src="/img/User.svg" alt="пользователь" />
+          </Link>
         </li>
       </ul>
     </header>

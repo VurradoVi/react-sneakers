@@ -8,6 +8,7 @@ interface AppContextType {
   isAddedItems: (id: number) => boolean;
   setCartOpened: React.Dispatch<React.SetStateAction<boolean>>;
   setCartItems: React.Dispatch<React.SetStateAction<IArr[]>>;
+
 }
 
 const defaultValue: AppContextType = {
@@ -16,7 +17,8 @@ const defaultValue: AppContextType = {
   cartItems: [], 
   isAddedItems: () => false,
   setCartOpened: () => false,
-  setCartItems: () => false
+  setCartItems: () => false,
+
 };
 
 const AppContext = createContext<AppContextType>(defaultValue);

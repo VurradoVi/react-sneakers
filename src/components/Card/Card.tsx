@@ -6,7 +6,7 @@ import AppContext from "../../context";
 
 interface CardProps extends IArr {
   onClickFavorite: () => void;
-  onPlus: (item: IArr) => void;
+  onPlus?: (item: IArr) => void;
   favorite: boolean;
   loading?: boolean;
 }
@@ -25,7 +25,9 @@ export default function Card({
   const [isFavorite, setIsFavorite] = useState<boolean>(favorite);
 
   const onClickPlus = () => {
-    onPlus({ id, name, img, price });
+    if (onPlus) {
+      onPlus({ id, name, img, price }); 
+    }
   };
 
   const onFavorite = () => {
@@ -50,13 +52,13 @@ export default function Card({
         </ContentLoader>
       ) : (
         <>
-          <div className={styles.favorite} onClick={onClickFavorite}>
+          {onClickFavorite && <div className={styles.favorite} onClick={onClickFavorite}>
             <img
               onClick={onFavorite}
               src={isFavorite ? "/img/favorite2.svg" : "/img/favorite.svg"}
               alt="favorite"
             />
-          </div>
+          </div>}
           <img width={133} height={112} src={img} alt="sneakers" />
           <h5>{name}</h5>
           <div className={styles.cardBottom}>
@@ -64,11 +66,11 @@ export default function Card({
               <span>Цена:</span>
               <b>{price} руб.</b>
             </div>
-            <img
+            {onPlus && <img
               onClick={onClickPlus}
               src={isAddedItems(id) ? "/img/PlusSub.svg" : "/img/Plus.svg"}
               alt="btn"
-            />
+            />}
           </div>
         </>
       )}
