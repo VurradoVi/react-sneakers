@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { IArr } from "../App";
-import Info from "./Info";
-import { useCart } from "../hooks/useCart";
+import { IArr } from "../../App";
+import Info from "../Info";
+import styles from './Drawer.module.scss'
+import { useCart } from "../../hooks/useCart";
 import axios from "axios";
 
 
@@ -9,11 +10,12 @@ type TDrawer = {
   onClose: () => void;
   items: IArr[];
   onRemove: (id: number) => void;
+  opened: boolean
 };
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export default function Drawer({ onClose, items, onRemove }: TDrawer) {
+export default function Drawer({ onClose, items, onRemove, opened }: TDrawer) {
   const {cartItems, setCartItems, totalPrice} = useCart()
   const [isComplete, setIsComplete] = useState(false);
   const [orderId, setOrderId] = useState(null);
@@ -42,8 +44,8 @@ export default function Drawer({ onClose, items, onRemove }: TDrawer) {
   };
 
   return (
-    <div className="overlay" onClick={onClose}>
-      <div className="drawer" onClick={(e) => e.stopPropagation()}>
+    <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`} onClick={onClose}>
+      <div className={styles.drawer} onClick={(e) => e.stopPropagation()}>
         <h2>
           Корзина
           <img
@@ -55,8 +57,8 @@ export default function Drawer({ onClose, items, onRemove }: TDrawer) {
         </h2>
 
         {items.length > 0 ? (
-          <div className="drawerFlex">
-            <div className="items">
+          <div className={styles.drawerFlex}>
+            <div className={styles.items}>
               {items.map((obj) => (
                 <div key={obj.id} className="cartItem">
                   <div

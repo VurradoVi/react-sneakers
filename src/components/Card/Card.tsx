@@ -26,7 +26,7 @@ export default function Card({
 
   const onClickPlus = () => {
     if (onPlus) {
-      onPlus({ id, name, img, price }); 
+      onPlus({ id, parentId: id, name, img, price }); 
     }
   };
 

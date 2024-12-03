@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Drawer from "./components/Drawer";
+import Drawer from "./components/Drawer/Drawer";
 import Header from "./components/Header";
 import { Route, Routes } from "react-router";
 import Home from "./components/pages/Home";
@@ -13,6 +13,7 @@ export interface IArr {
   name: string;
   price: number;
   img: string;
+  parentId?: number;
 }
 
 export default function App() {
@@ -28,7 +29,8 @@ export default function App() {
 
   useEffect(() => {
     async function fetchData() {
-      setIsLoading(true);
+      try {
+        setIsLoading(true);
 
       const itemsResponse = await axios.get(
         "https://6739f262a3a36b5a62f02ffd.mockapi.io/items"
@@ -42,6 +44,9 @@ export default function App() {
 
       setItems(itemsResponse.data);
       setCartItems(cartResponse.data);
+      } catch (error) {
+        alert('ошибка при запросе данных')
+      }
     }
     fetchData();
   }, []);
@@ -52,16 +57,18 @@ export default function App() {
     }
   }, [favorites]);
 
-  const onAddToCart = (obj: IArr) => {
+  const onAddToCart = async (obj: IArr) => {
     try {
       if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
-        axios.delete(
+        setCartItems((prev) => prev.filter((item) => item.id !== obj.id));
+        await axios.delete(
           `https://6739f262a3a36b5a62f02ffd.mockapi.io/cart/${obj.id}`
         );
-        setCartItems((prev) => prev.filter((item) => item.id !== obj.id));
+        
       } else {
-        axios.post("https://6739f262a3a36b5a62f02ffd.mockapi.io/cart", obj);
         setCartItems((prev) => [...prev, obj]);
+        await axios.post("https://6739f262a3a36b5a62f02ffd.mockapi.io/cart", obj);
+        
       }
     } catch (error) {
       alert("Ошибка в добавлении товара");
@@ -96,7 +103,7 @@ export default function App() {
   };
 
   const isAddedItems = (id: number) => {
-    return cartItems.some((obj) => Number(obj.id) === Number(id));
+    return cartItems.some((obj) => Number(obj.parentId) === Number(id));
   };
 
   return (
@@ -112,13 +119,13 @@ export default function App() {
       }}
     >
       <div className="wrapper">
-        {cartOpened && (
-          <Drawer
+      <Drawer
             onRemove={onRemoveItem}
             items={cartItems}
             onClose={() => setCartOpened(false)}
+            opened={cartOpened}
           />
-        )}
+
         <Header onClickCart={() => setCartOpened(true)} />
 
         <Routes>
@@ -150,8 +157,7 @@ export default function App() {
           <Route
             path="/orders"
             element={
-              <Orders onToggleFavorite={onToggleFavorite}
-              onAddToCart={onAddToCart}
+              <Orders
               />
             }
           />
