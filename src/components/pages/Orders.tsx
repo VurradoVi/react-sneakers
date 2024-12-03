@@ -3,6 +3,10 @@ import Card from "../Card/Card";
 import axios from "axios";
 import { IArr } from "../../App";
 
+interface Order {
+  id: number;
+  items: IArr[];
+}
 
 export default function Orders() {
   const [orders, setOrders] = useState<IArr[]>([]);
@@ -11,9 +15,9 @@ export default function Orders() {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/orders");
+        const { data }: { data: Order[] } = await axios.get("http://localhost:3000/orders");
 
-        setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
+        setOrders(data.reduce<IArr[]>((prev, obj) => [...prev, ...obj.items], []));
         setIsLoading(false);
       } catch (error) {
         alert('ошибка с загрузкой моих заказов')
